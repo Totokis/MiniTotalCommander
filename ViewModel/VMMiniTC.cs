@@ -177,7 +177,7 @@ namespace MiniTC.ViewModel
             else if (SelectedPathLeft != null && SelectedPathRight == null)
             {
                 string source = SelectedPathLeft.ReturnPath();
-                string target = PanelITC.LeftPanel.ReturnCurrentPath();
+                string target = PanelITC.RightPanel.ReturnCurrentPath();
                 PanelITC.CopyButton.copyFile(source, target);
                 RightListOfPaths = CastToObservable(PanelITC.RightPanel.ReturnListOfPaths(), RightListOfPaths);
             }
