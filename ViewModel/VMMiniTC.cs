@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using MiniTC.Model.Klasy;
+    
 namespace MiniTC.ViewModel
 {
+   
     using Model;
     using BaseClass;
     using System.Collections.ObjectModel;
@@ -14,7 +16,7 @@ namespace MiniTC.ViewModel
    
     class VMMiniTC: ViewModelBase
     {
-        private MiniTC PanelITC = new Model.MiniTC("C:\\Users\\pawel\\Desktop\\Abba");
+        private MiniTC PanelITC = new Model.MiniTC();
         public VMMiniTC() { Window_Loaded(); }
         ~VMMiniTC() { }
 
@@ -109,7 +111,6 @@ namespace MiniTC.ViewModel
 
         private ObservableCollection<IPath> CastToObservable(List<IPath> lista, ObservableCollection<IPath> observable)
         {
-           
             observable.Clear();
             foreach (var item in lista)
             {
@@ -170,20 +171,29 @@ namespace MiniTC.ViewModel
             {
                 string source = SelectedPathRight.ReturnPath();
                 string target = PanelITC.LeftPanel.ReturnCurrentPath();
-                PanelITC.CopyButton.copyFile(source,target);
+                bool done = PanelITC.CopyButton.copyFile(source,target);
                 LeftListOfPaths = CastToObservable(PanelITC.LeftPanel.ReturnListOfPaths(), LeftListOfPaths);
+                if (!done)
+                {
+                    CurrentPathLeft = "Nie można wykonać operacji".ToString();
+                }
 
             }
             else if (SelectedPathLeft != null && SelectedPathRight == null)
             {
                 string source = SelectedPathLeft.ReturnPath();
                 string target = PanelITC.RightPanel.ReturnCurrentPath();
-                PanelITC.CopyButton.copyFile(source, target);
+                bool done = PanelITC.CopyButton.copyFile(source, target);
                 RightListOfPaths = CastToObservable(PanelITC.RightPanel.ReturnListOfPaths(), RightListOfPaths);
+                if (!done)
+                {
+                    CurrentPathRight = "Nie można wykonać operacji".ToString();
+                }
             }
             else if(SelectedPathLeft == null && SelectedPathRight == null)
             {
                 //TODO wyświetl se okno dialogowe co powie NIE MASZ NIC ZAZNACZONEGO
+               
             }
         }
 
